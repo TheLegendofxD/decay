@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuclides</title>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    <link rel="stylesheet" href="main.css">
+    <link rel="shortcut icon" href="assets/atom.svg" type="image/svg">
+</head>
+<body>
+    <section class="loading-screen active">
+        <div class="row">
+            <img src="assets/atom.svg" alt="atom icon" id="atom-icon">
+            <div class="loading-text">
+                Loading...
+            </div>
+        </div>
+        <div class="row">
+            <p id="loading-message">Just a moment...</p>
+        </div>
+        <div class="footnotes">
+            <i>
+                <a target="_blank" href="https://icons8.com/icon/YYYhFVbH4vFv/react-native">Atom</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+                &middot;
+                Made with ❤️ by The_Legend_of_xD
+            </i>
+        </div>
+    </section>
+    <main>
+        <input type="text" placeholder="e.g. Th-233" id="nuclide-input">
+        <button py-click="test">Go!</button>
+        <div id="output"></div>
+        <!--
+        <div class="nuclide-card betam">
+            <div class="name">
+                Th<span class="number">233</span>
+            </div>
+            <span class="time">22 min</span>
+            <span class="decay">β-</span>
+        </div>
+        -->
+    </main>
+    <script src="scripts/app.js"></script>
+    <script type="py" src="scripts/main.py" config="./pyscript.json"></script>
+</body>
+</html>
