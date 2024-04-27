@@ -1,8 +1,17 @@
 from pyscript import document
 import radioactivedecay as rd
+from radioactivedecay.utils import build_nuclide_string
 
 OUTPUT_DIV  = document.querySelector('#output')
 INPUT_FIELD = document.querySelector('#nuclide-input')
+
+ELEMENT_NAMES: dict = {"h":["hydrogen","wasserstoff"],"he":["helium"],"li":["lithium"],"be":["beryllium"],"b":["boron","bor"],"c":["carbon","kohlenstoff"],"n":["nitrogen","stickstoff"],"o":["oxygen","sauerstoff"],"f":["fluorine","fluor"],"ne":["neon"],"na":["sodium","natrium"],"mg":["magnesium"],"al":["aluminum","aluminium"],"si":["silicon","silicium"],"p":["phosphorus","phosphor"],"s":["sulfur","schwefel"],"cl":["chlorine","chlor"],"ar":["argon"],"k":["potassium","kalium"],"ca":["calcium"],"sc":["scandium"],"ti":["titanium","titan"],"v":["vanadium"],"cr":["chromium","chrom"],"mn":["manganese","mangan"],"fe":["iron","eisen"],"co":["cobalt"],"ni":["nickel"],"cu":["copper","kupfer"],"zn":["zinc","zink"],"ga":["gallium"],"ge":["germanium"],"as":["arsenic","arsen"],"se":["selenium","selen"],"br":["bromine","brom"],"kr":["krypton"],"rb":["rubidium"],"sr":["strontium"],"y":["yttrium"],"zr":["zirconium"],"nb":["niobium","niob"],"mo":["molybdenum","molybd\u00e4n"],"tc":["technetium"],"ru":["ruthenium"],"rh":["rhodium"],"pd":["palladium"],"ag":["silver","silber"],"cd":["cadmium"],"in":["indium"],"sn":["tin","zinn"],"sb":["antimony","antimon"],"te":["tellurium","tellur"],"i":["iodine","iod"],"xe":["xenon"],"cs":["cesium","caesium"],"ba":["barium"],"la":["lanthanum","lanthan"],"ce":["cerium","cer"],"pr":["praseodymium","praseodym"],"nd":["neodymium","neodym"],"pm":["promethium"],"sm":["samarium"],"eu":["europium"],"gd":["gadolinium"],"tb":["terbium"],"dy":["dysprosium"],"ho":["holmium"],"er":["erbium"],"tm":["thulium"],"yb":["ytterbium"],"lu":["lutetium"],"hf":["hafnium"],"ta":["tantalum","tantal"],"w":["tungsten","wolfram"],"re":["rhenium"],"os":["osmium"],"ir":["iridium","irudium"],"pt":["platinum","platin"],"au":["gold"],"hg":["mercury","quecksilber"],"tl":["thallium"],"pb":["lead","blei"],"bi":["bismuth","bismut"],"po":["polonium"],"at":["astatine","astat"],"rn":["radon"],"fr":["francium"],"ra":["radium"],"ac":["actinium"],"th":["thorium"],"pa":["protactinium"],"u":["uranium","uran"],"np":["neptunium"],"pu":["plutonium"],"am":["americium"],"cm":["curium"],"bk":["berkelium"],"cf":["californium"],"es":["einsteinium"],"fm":["fermium"],"md":["mendelevium"],"no":["nobelium"],"lr":["lawrencium"],"rf":["rutherfordium"],"db":["dubnium"],"sg":["seaborgium"],"bh":["bohrium"],"hs":["hassium"],"mt":["meitnerium"],"ds":["darmstadtium"],"rg":["roentgenium"],"cn":["copernicium"],"nh":["nihonium"],"fl":["flerovium"],"mc":["moscovium"],"lv":["livermorium"],"ts":["tennessine","tenness"],"og":["oganesson"]}
+
+def get_symbol(element_name: str) -> str|None:
+    for element in ELEMENT_NAMES.keys():
+        if element_name.lower() in ELEMENT_NAMES[element]:
+            return element
+    return None
 
 def generate_nuclide_card(nuclide_name: str, nuclide: rd.Nuclide) -> str:
     element_symbol: str = nuclide_name.split('-')[0]
@@ -32,16 +41,27 @@ def generate_nuclide_card(nuclide_name: str, nuclide: rd.Nuclide) -> str:
         <span class="decay">{','.join(decay_modes)}</span>
     </div>'''
 
+def parse_nuclide_input(nuclide_input: str):
+    nuclide_input = nuclide_input.lower()
+
+    nuclide_input = nuclide_input.split('-',maxsplit=1)
+
+    if not nuclide_input[0] in list(ELEMENT_NAMES.keys()):
+        nuclide_input[0] = get_symbol(nuclide_input[0])
+    
+    return f'{nuclide_input[0]}-{nuclide_input[1]}'
+    
+
 def list_chain(event):
-    OUTPUT_DIV.innerHTML = ''
-    nuclide_name = INPUT_FIELD.value
+    nuclide_name = parse_nuclide_input(INPUT_FIELD.value)
+    OUTPUT_DIV.innerHTML = f'<div><i>Searching for {nuclide_name}</i></div>'
 
     try:
         finished: bool = False
         index: int = 1
         while not finished:
             nuc = rd.Nuclide(nuclide_name)
-            OUTPUT_DIV.innerHTML += generate_nuclide_card(nuclide_name, nuc)
+            OUTPUT_DIV.innerHTML += generate_nuclide_card(build_nuclide_string(nuc.Z, nuc.A, nuc.state), nuc)
             OUTPUT_DIV.innerHTML += f'Number in Chain: {index}<br>Protons: {nuc.Z}<br>Nucleon: {nuc.A}<br>Halftime: {nuc.half_life("readable")}<br>Progeny: {nuc.progeny()}<hr>'
 
             if len(nuc.progeny()) > 0:
