@@ -64,7 +64,7 @@ def change_mode(event):
     current_mode = (current_mode+1) % len(MODES)
     MODE_BTN.innerText = f'Mode: {MODES[current_mode]}'
 
-def generate_image(event):
+def generate_image_url():
     bstream = io.BytesIO()
 
     download_btn = document.querySelector('#plot-download-btn')
@@ -79,10 +79,22 @@ def generate_image(event):
 
     file = File.new([js_array], 'chain.png', {type: 'image/png'})
     url = URL.createObjectURL(file)
+    return (url, download_btn.dataset.nuclide)
+
+def download_plot(event):
+    url, filename = generate_image_url()
 
     hidden_link = document.createElement('a')
-    hidden_link.setAttribute('download', 'chain.png')
     hidden_link.setAttribute('href', url)
+    hidden_link.setAttribute('download', f'{filename}-chain.png')
+    hidden_link.click()
+
+def open_plot(event):
+    url, filename = generate_image_url()
+
+    hidden_link = document.createElement('a')
+    hidden_link.setAttribute('href', url)
+    hidden_link.setAttribute('target', '_blank')
     hidden_link.click()
 
 def list_chain(event):
@@ -90,7 +102,11 @@ def list_chain(event):
     OUTPUT_DIV.innerHTML = f'''
     <section class="pre-results">
         <p><i>Searching for {nuclide_name}</i></p>
-        <button data-nuclide="{nuclide_name}" id="plot-download-btn" class="btn" py-click="generate_image">Download Plot of entire decay chain</button>
+        <p>Plot Image of entire decay chain:</p>
+        <div>
+            <button data-nuclide="{nuclide_name}" data-type="download" id="plot-download-btn" class="btn" py-click="download_plot">Download</button>
+            <button data-nuclide="{nuclide_name}" data-type="open" id="plot-download-btn" class="btn" py-click="open_plot">Open in new Tab</button>
+        </div>
     </section>
     '''
     
