@@ -117,6 +117,10 @@ nav {
     min-width: 5rem;
 }
 
+.btn.mode-btn {
+    min-width: 15rem;
+}
+
 /* Nuclide Card */
 .nuclide-card {
     display: flex;
