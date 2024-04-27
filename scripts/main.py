@@ -2,6 +2,10 @@ from pyscript import document
 import radioactivedecay as rd
 from radioactivedecay.utils import build_nuclide_string
 
+from js import Uint8Array, File, URL, document
+import io
+
+
 OUTPUT_DIV  = document.querySelector('#output')
 INPUT_FIELD = document.querySelector('#nuclide-input')
 MODE_BTN = document.querySelector('#mode-btn')
@@ -60,9 +64,36 @@ def change_mode(event):
     current_mode = (current_mode+1) % len(MODES)
     MODE_BTN.innerText = f'Mode: {MODES[current_mode]}'
 
+def generate_image(event):
+    bstream = io.BytesIO()
+
+    download_btn = document.querySelector('#plot-download-btn')
+
+
+    nuclide = rd.Nuclide(download_btn.dataset.nuclide)
+    fig, ax = nuclide.plot()
+    fig.savefig(bstream)
+
+    js_array = Uint8Array.new(len(bstream.getbuffer().tobytes()))
+    js_array.assign(bstream.getbuffer())
+
+    file = File.new([js_array], 'chain.png', {type: 'image/png'})
+    url = URL.createObjectURL(file)
+
+    hidden_link = document.createElement('a')
+    hidden_link.setAttribute('download', 'chain.png')
+    hidden_link.setAttribute('href', url)
+    hidden_link.click()
+
 def list_chain(event):
     nuclide_name = parse_nuclide_input(INPUT_FIELD.value)
-    OUTPUT_DIV.innerHTML = f'<div><i>Searching for {nuclide_name}</i></div>'
+    OUTPUT_DIV.innerHTML = f'''
+    <section class="pre-results">
+        <p><i>Searching for {nuclide_name}</i></p>
+        <button data-nuclide="{nuclide_name}" id="plot-download-btn" class="btn" py-click="generate_image">Download Plot of entire decay chain</button>
+    </section>
+    '''
+    
 
     try:
         finished: bool = False

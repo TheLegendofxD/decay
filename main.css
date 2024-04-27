@@ -104,6 +104,7 @@ nav {
 }
 
 .btn {
+    display: inline-block;
     font-size: 1.1rem;
     padding: .4rem;
     border: 1px solid #121212;
@@ -119,6 +120,17 @@ nav {
 
 .btn.mode-btn {
     min-width: 15rem;
+}
+
+section.pre-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+section.pre-results > p {
+    text-align: center;
 }
 
 /* Nuclide Card */
