@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="pse.css">
     <link rel="shortcut icon" href="assets/atom.svg" type="image/svg">
 </head>
 <body>
@@ -31,6 +32,7 @@
     </section>
     <main>
         <nav>
+            <button class="btn" id="pse-btn">PT</button>
             <input type="text" placeholder="e.g. Th-233, Radium-225" id="nuclide-input" class="nuclide-input">
             <button py-click="change_mode" class="mode-btn btn" id="mode-btn">Mode: Most probable</button>
             <button py-click="list_chain" class="submit-btn btn">Go!</button>
@@ -46,6 +48,9 @@
         </div>
         -->
     </main>
+    <section class="pse-selector" id="pse-selector">
+        <div class="table" id="table"></div>
+    </section>
     <script src="scripts/app.js"></script>
     <script type="py" src="scripts/main.py" config="./pyscript.json"></script>
 </body>

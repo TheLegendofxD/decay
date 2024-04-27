@@ -133,3 +133,16 @@ def list_chain(event):
 # Removing Loading screen
 document.querySelector('.loading-screen').classList.remove('active')
 document.querySelector('main').classList.add('active')
+
+
+# Table Generator
+table = document.querySelector('#table')
+EXTRA_CLASSES = ["d-nonmetal gas", "n-gas gas", "al-metal", "alearth-metal", "metalloid", "patomic-nonmetal", "d-nonmetal gas", "d-nonmetal gas", "d-nonmetal gas", "n-gas gas", "al-metal", "alearth-metal", "pTransition-metal", "metalloid", "patomic-nonmetal", "patomic-nonmetal", "d-nonmetal gas", "n-gas gas", "al-metal", "alearth-metal", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "pTransition-metal", "pTransition-metal", "metalloid", "metalloid", "patomic-nonmetal", "d-nonmetal liquid", "n-gas gas", "al-metal", "alearth-metal", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "pTransition-metal", "pTransition-metal", "pTransition-metal", "metalloid", "metalloid", "d-nonmetal", "n-gas gas", "al-metal", "alearth-metal", "lan lan-group", "lan lan-group", "lan lan-group", "lan lan-group", "lan lan-group", "lan lan-group", "lan lan-group", "lan lan-group", "lan lan-group", "lan lan-group", "lan lan-group", "lan lan-group", "lan lan-group", "lan lan-group", "lan lan-group", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "pTransition-metal", "pTransition-metal", "pTransition-metal", "pTransition-metal", "pTransition-metal", "metalloid", "n-gas gas", "al-metal", "alearth-metal", "act act-group", "act act-group", "act act-group", "act act-group", "act act-group", "act act-group", "act act-group", "act act-group", "act act-group", "act act-group", "act act-group", "act act-group", "act act-group", "act act-group", "act act-group", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "trans", "n-gas gas"]
+for number, element in enumerate(ELEMENT_NAMES.keys()):
+    table.innerHTML += f'''
+    <div tabindex='0' class='ele ele-{number+1} {EXTRA_CLASSES[number]}' onclick='select_element("{ELEMENT_NAMES[element][0]}");'> 
+        <div class='ele-name' title='{ELEMENT_NAMES[element][0]}'> 
+            {element}
+        </div> 
+    </div> 
+    '''

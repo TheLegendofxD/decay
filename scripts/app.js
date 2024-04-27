@@ -50,3 +50,14 @@ function finish_change_loading_animation() {
 }
 
 let message_timer = setInterval(change_loading_message, 2800);
+
+var pse_selector = document.getElementById('pse-selector');
+var nuclide_input = document.getElementById('nuclide-input');
+var pse_btn = document.getElementById('pse-btn');
+
+function hide_pse() { pse_selector.classList.remove('active'); }
+function show_pse() { pse_selector.classList.add('active'); }
+function select_element(element) { nuclide_input.value = element+'-'; nuclide_input.focus() }
+
+pse_selector.addEventListener('click', hide_pse);
+pse_btn.addEventListener('click', show_pse);
