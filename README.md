@@ -1,7 +1,7 @@
-# Radioactive Decay Chain Website
-![GitHub top language](https://img.shields.io/github/languages/top/TheLegendofxD/decay?style=plastic)
-![GitHub repo size](https://img.shields.io/github/repo-size/TheLegendofxD/decay?style=plastic)
-![GitHub License](https://img.shields.io/github/license/TheLegendofxD/decay?style=plastic)
+# ![Logo](https://raw.githubusercontent.com/TheLegendofxD/decay/main/assets/atom.svg) Radioactive Decay Chain Website
+![GitHub top language](https://img.shields.io/github/languages/top/TheLegendofxD/decay?style=flat)
+![GitHub repo size](https://img.shields.io/github/repo-size/TheLegendofxD/decay?style=flat)
+![GitHub License](https://img.shields.io/github/license/TheLegendofxD/decay?style=flat)
 [![pages-build-deployment](https://github.com/TheLegendofxD/decay/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/TheLegendofxD/decay/actions/workflows/pages/pages-build-deployment)
 
 A website to calculate and display radioactive decay chains.
