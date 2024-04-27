@@ -13,6 +13,8 @@ a:hover {
     text-decoration: dotted;
 }
 
+input:focus {outline:none;}
+
 /* Loading Screen */
 .loading-screen {
     display: none;
@@ -83,9 +85,39 @@ main {
 }
 
 main.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+nav {
+    margin-bottom: 1.3rem;
+}
+
+.nuclide-input {
+    background-color: #434343;
+    color: white;
+    padding: .4rem;
+    font-size: 1.1rem;
+    border: 1px solid #121212;
+    border-radius: .3rem;
+}
+
+.btn {
+    font-size: 1.1rem;
+    padding: .4rem;
+    border: 1px solid #121212;
+    border-radius: .3rem;
+    background-color: #434343;
+    color: white;
+    cursor: pointer;
+}
+
+.btn.submit-btn {
+    min-width: 5rem;
+}
+
+/* Nuclide Card */
 .nuclide-card {
     display: flex;
     border: 2px solid wheat;
