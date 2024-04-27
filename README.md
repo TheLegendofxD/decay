@@ -4,7 +4,8 @@
 ![GitHub License](https://img.shields.io/github/license/TheLegendofxD/decay?style=flat)
 [![pages-build-deployment](https://github.com/TheLegendofxD/decay/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/TheLegendofxD/decay/actions/workflows/pages/pages-build-deployment)
 
-A website to calculate and display radioactive decay chains.
+A website to calculate and display radioactive decay chains, built using [pyscript](https://pyscript.net/).
+An hosted instance of it can be found [here](https://thelegendofxd.github.io/decay/).
 
 ## Run locally
 ```bash
@@ -15,5 +16,5 @@ python3 -m http.server
 
 ## Credits
 For the nucloid data and the plotting as image the package ```radioactivedecay``` is used.
-The icon used as loading icon & as favicon is from icons8.com.
-The periodic table is a modified version of the one from a tutorial on geeksforgeeks.com
+The icon used as loading icon & as favicon is from [icons8.com](https://icons8.com/icon/YYYhFVbH4vFv/react-native).
+The periodic table is a modified version of the one from a tutorial on [geeksforgeeks.com](https://www.geeksforgeeks.org/periodic-table-design-using-html-and-css/).
