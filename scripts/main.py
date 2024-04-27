@@ -69,17 +69,17 @@ def generate_image_url():
 
     download_btn = document.querySelector('#plot-download-btn')
 
-
-    nuclide = rd.Nuclide(download_btn.dataset.nuclide)
+    nuclide_name = download_btn.dataset.nuclide
+    nuclide = rd.Nuclide(nuclide_name)
     fig, ax = nuclide.plot()
     fig.savefig(bstream)
 
     js_array = Uint8Array.new(len(bstream.getbuffer().tobytes()))
     js_array.assign(bstream.getbuffer())
 
-    file = File.new([js_array], 'chain.png', {type: 'image/png'})
+    file = File.new([js_array], f'{nuclide_name}-chain.png', {type: 'image/png'})
     url = URL.createObjectURL(file)
-    return (url, download_btn.dataset.nuclide)
+    return (url, nuclide_name)
 
 def download_plot(event):
     url, filename = generate_image_url()
