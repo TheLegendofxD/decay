@@ -32,7 +32,7 @@ def generate_nuclide_card(nuclide_name: str, nuclide: rd.Nuclide) -> str:
         <span class="decay">{','.join(decay_modes)}</span>
     </div>'''
 
-def test(event):
+def list_chain(event):
     OUTPUT_DIV.innerHTML = ''
     nuclide_name = INPUT_FIELD.value
 
