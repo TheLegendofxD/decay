@@ -33,12 +33,22 @@ def generate_nuclide_card(nuclide_name: str, nuclide: rd.Nuclide) -> str:
     </div>'''
 
 def test(event):
+    OUTPUT_DIV.innerHTML = ''
     nuclide_name = INPUT_FIELD.value
 
     try:
-        nuc = rd.Nuclide(nuclide_name)
-        OUTPUT_DIV.innerHTML = generate_nuclide_card(nuclide_name, nuc)
-        OUTPUT_DIV.innerHTML += f'Protons: {nuc.Z}<br>Nucleon: {nuc.A}<br>Halftime: {nuc.half_life("readable")}<br>Progeny: {nuc.progeny()}'
+        finished: bool = False
+        index: int = 1
+        while not finished:
+            nuc = rd.Nuclide(nuclide_name)
+            OUTPUT_DIV.innerHTML += generate_nuclide_card(nuclide_name, nuc)
+            OUTPUT_DIV.innerHTML += f'Number in Chain: {index}<br>Protons: {nuc.Z}<br>Nucleon: {nuc.A}<br>Halftime: {nuc.half_life("readable")}<br>Progeny: {nuc.progeny()}<hr>'
+
+            if len(nuc.progeny()) > 0:
+                nuclide_name = nuc.progeny()[0]
+                index += 1
+            else:
+                finished = True
     except ValueError:
         OUTPUT_DIV.innerHTML = 'Invalid Nuclide Name'
 
