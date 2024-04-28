@@ -117,7 +117,16 @@ def list_chain(event):
         while not finished:
             nuc = rd.Nuclide(nuclide_name)
             OUTPUT_DIV.innerHTML += generate_nuclide_card(build_nuclide_string(nuc.Z, nuc.A, nuc.state), nuc)
-            OUTPUT_DIV.innerHTML += f'Number in Chain: {index}<br>Protons: {nuc.Z}<br>Nucleon: {nuc.A}<br>Halftime: {nuc.half_life("readable")}<br>Progeny: {nuc.progeny()}<hr>'
+            OUTPUT_DIV.innerHTML += f'''
+                <div class="extra-info">
+                    <b>Number in Chain</b>: {index}<br>
+                    <b>Protons</b>: {nuc.Z}<br>
+                    <b>Nucleon</b>: {nuc.A}<br>
+                    <b>Halftime</b>: {nuc.half_life("readable")}<br>
+                    <b>Progeny</b>: {nuc.progeny()}
+                </div>
+                <hr>
+            '''
 
             if len(nuc.progeny()) > 0:
                 nuclide_name = nuc.progeny()[0]
