@@ -9,6 +9,11 @@
 }
 
 @font-face {
+    font-family: 'Inter';
+    src: url('../assets/inter.ttf');
+}
+
+@font-face {
     font-family: 'Raleway';
     src: url('../assets/raleway.ttf');
 }
@@ -109,6 +114,10 @@ nav {
     margin-bottom: 1.3rem;
 }
 
+input {
+    font-family: Inter, sans-serif;
+}
+
 .nuclide-input {
     background-color: var(--input-bg);
     color: var(--text-color);
@@ -116,12 +125,10 @@ nav {
     font-size: 1.1rem;
     border: 1px solid var(--input-border);
     border-radius: .3rem;
-    font-family: Raleway, sans-serif;
 }
 
 .btn {
     display: inline-block;
-    font-family: Raleway, sans-serif;
     font-size: 1.1rem;
     padding: .4rem;
     border: 1px solid var(--input-border);
@@ -156,6 +163,7 @@ section.pre-results > p {
 
 /* Nuclide Card */
 .nuclide-card {
+    font-family: Inter, sans-serif;
     display: flex;
     border: 2px solid wheat;
     height: 4.5rem;

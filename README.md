@@ -18,4 +18,4 @@ python3 -m http.server
 - For the nucloid data and the plotting as image the package ```radioactivedecay``` is used.
 - The icon used as loading icon & as favicon is from [icons8.com](https://icons8.com/icon/YYYhFVbH4vFv/react-native).
 - The periodic table is a modified version of the one from a tutorial on [geeksforgeeks.com](https://www.geeksforgeeks.org/periodic-table-design-using-html-and-css/).
-- The font used is [Raleway](https://fonts.google.com/specimen/Raleway).
+- The fonts used are [Raleway](https://fonts.google.com/specimen/Raleway) and [Inter](https://fonts.google.com/specimen/Inter).
