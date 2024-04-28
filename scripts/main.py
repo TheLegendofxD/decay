@@ -4,13 +4,13 @@ from radioactivedecay.utils import build_nuclide_string
 
 from js import Uint8Array, File, URL, document
 import io
-
+import random
 
 OUTPUT_DIV  = document.querySelector('#output')
 INPUT_FIELD = document.querySelector('#nuclide-input')
 MODE_BTN = document.querySelector('#mode-btn')
 
-MODES = ['Most probable', 'Manual', 'Random']
+MODES = ['Most probable', 'Manual', 'Simulate']
 ELEMENT_NAMES: dict = {"h":["hydrogen","wasserstoff"],"he":["helium"],"li":["lithium"],"be":["beryllium"],"b":["boron","bor"],"c":["carbon","kohlenstoff"],"n":["nitrogen","stickstoff"],"o":["oxygen","sauerstoff"],"f":["fluorine","fluor"],"ne":["neon"],"na":["sodium","natrium"],"mg":["magnesium"],"al":["aluminum","aluminium"],"si":["silicon","silicium"],"p":["phosphorus","phosphor"],"s":["sulfur","schwefel"],"cl":["chlorine","chlor"],"ar":["argon"],"k":["potassium","kalium"],"ca":["calcium"],"sc":["scandium"],"ti":["titanium","titan"],"v":["vanadium"],"cr":["chromium","chrom"],"mn":["manganese","mangan"],"fe":["iron","eisen"],"co":["cobalt"],"ni":["nickel"],"cu":["copper","kupfer"],"zn":["zinc","zink"],"ga":["gallium"],"ge":["germanium"],"as":["arsenic","arsen"],"se":["selenium","selen"],"br":["bromine","brom"],"kr":["krypton"],"rb":["rubidium"],"sr":["strontium"],"y":["yttrium"],"zr":["zirconium"],"nb":["niobium","niob"],"mo":["molybdenum","molybd\u00e4n"],"tc":["technetium"],"ru":["ruthenium"],"rh":["rhodium"],"pd":["palladium"],"ag":["silver","silber"],"cd":["cadmium"],"in":["indium"],"sn":["tin","zinn"],"sb":["antimony","antimon"],"te":["tellurium","tellur"],"i":["iodine","iod"],"xe":["xenon"],"cs":["cesium","caesium"],"ba":["barium"],"la":["lanthanum","lanthan"],"ce":["cerium","cer"],"pr":["praseodymium","praseodym"],"nd":["neodymium","neodym"],"pm":["promethium"],"sm":["samarium"],"eu":["europium"],"gd":["gadolinium"],"tb":["terbium"],"dy":["dysprosium"],"ho":["holmium"],"er":["erbium"],"tm":["thulium"],"yb":["ytterbium"],"lu":["lutetium"],"hf":["hafnium"],"ta":["tantalum","tantal"],"w":["tungsten","wolfram"],"re":["rhenium"],"os":["osmium"],"ir":["iridium","irudium"],"pt":["platinum","platin"],"au":["gold"],"hg":["mercury","quecksilber"],"tl":["thallium"],"pb":["lead","blei"],"bi":["bismuth","bismut"],"po":["polonium"],"at":["astatine","astat"],"rn":["radon"],"fr":["francium"],"ra":["radium"],"ac":["actinium"],"th":["thorium"],"pa":["protactinium"],"u":["uranium","uran"],"np":["neptunium"],"pu":["plutonium"],"am":["americium"],"cm":["curium"],"bk":["berkelium"],"cf":["californium"],"es":["einsteinium"],"fm":["fermium"],"md":["mendelevium"],"no":["nobelium"],"lr":["lawrencium"],"rf":["rutherfordium"],"db":["dubnium"],"sg":["seaborgium"],"bh":["bohrium"],"hs":["hassium"],"mt":["meitnerium"],"ds":["darmstadtium"],"rg":["roentgenium"],"cn":["copernicium"],"nh":["nihonium"],"fl":["flerovium"],"mc":["moscovium"],"lv":["livermorium"],"ts":["tennessine","tenness"],"og":["oganesson"]}
 
 current_mode: int = 0
@@ -130,7 +130,32 @@ def list_chain(event):
             nuc.decay_modes()
 
             if len(nuc.progeny()) > 0:
-                OUTPUT_DIV.innerHTML += f'↓ {nuc.decay_modes()[0]} ({nuc.branching_fractions()[0]*100}%)<hr>'
+                match current_mode:
+                    case 0: # Most Probable
+                        progeny_index = 0
+                    case 1: # Manual
+                        # Not implemented
+                        progeny_index = 0
+                    case 2: # Simulate
+                        if len(nuc.progeny()) > 1:
+                            progeny_index = -1
+                            number = random.random()
+                            helper = 0
+
+                            for i, fraction in enumerate(reversed(nuc.branching_fractions())):
+                                helper += fraction
+                                print(f'{helper=}, {fraction=}')
+                                if number <= helper:
+                                    progeny_index = len(nuc.branching_fractions()) - 1 - i
+                                    break
+                            print(f'{number} -> {progeny_index} {nuc.branching_fractions()}')
+                            if progeny_index == -1:
+                                progeny_index = 0
+                                print('Error: Something went wrong')
+                        else:
+                            progeny_index = 0
+                    
+                OUTPUT_DIV.innerHTML += f'↓ {nuc.decay_modes()[progeny_index]} ({nuc.branching_fractions()[progeny_index]*100}%)<hr>'
                 nuclide_name = nuc.progeny()[0]
                 index += 1
             else:
