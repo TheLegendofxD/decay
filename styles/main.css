@@ -25,7 +25,7 @@ a {
 }
 
 a:hover {
-    text-decoration: dotted;
+    text-decoration: underline;
 }
 
 input:focus {outline:none;}
