@@ -157,7 +157,7 @@ def list_chain(event):
                             progeny_index = 0
                     
                 OUTPUT_DIV.innerHTML += f'↓ {nuc.decay_modes()[progeny_index]} ({nuc.branching_fractions()[progeny_index]*100}%)<hr>'
-                nuclide_name = nuc.progeny()[0]
+                nuclide_name = nuc.progeny()[progeny_index]
                 index += 1
             else:
                 finished = True
