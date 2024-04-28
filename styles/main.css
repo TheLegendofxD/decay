@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Raleway';
-    src: url('assets/raleway.ttf');
+    src: url('../assets/raleway.ttf');
 }
 
 body {
