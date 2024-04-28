@@ -1,0 +1,125 @@
+{
+    "radioactive_isotopes": [
+      {
+        "name": "Uranium-235",
+        "symbol": "U-235"
+      },
+      {
+        "name": "Uranium-238",
+        "symbol": "U-238"
+      },
+      {
+        "name": "Plutonium-239",
+        "symbol": "Pu-239"
+      },
+      {
+        "name": "Carbon-14",
+        "symbol": "C-14"
+      },
+      {
+        "name": "Radon-222",
+        "symbol": "Rn-222"
+      },
+      {
+        "name": "Iodine-131",
+        "symbol": "I-131"
+      },
+      {
+        "name": "Cesium-137",
+        "symbol": "Cs-137"
+      },
+      {
+        "name": "Strontium-90",
+        "symbol": "Sr-90"
+      },
+      {
+        "name": "Tritium",
+        "symbol": "H-3"
+      },
+      {
+        "name": "Potassium-40",
+        "symbol": "K-40"
+      },
+      {
+        "name": "Thorium-232",
+        "symbol": "Th-232"
+      },
+      {
+        "name": "Radium-226",
+        "symbol": "Ra-226"
+      },
+      {
+        "name": "Polonium-210",
+        "symbol": "Po-210"
+      },
+      {
+        "name": "Americium-241",
+        "symbol": "Am-241"
+      },
+      {
+        "name": "Cobalt-60",
+        "symbol": "Co-60"
+      },
+      {
+        "name": "Technetium-99m",
+        "symbol": "Tc-99m"
+      },
+      {
+        "name": "Iridium-192",
+        "symbol": "Ir-192"
+      },
+      {
+        "name": "Phosphorus-32",
+        "symbol": "P-32"
+      },
+      {
+        "name": "Hydrogen-3",
+        "symbol": "H-3"
+      },
+      {
+        "name": "Radon-220",
+        "symbol": "Rn-220"
+      },
+      {
+        "name": "Lead-210",
+        "symbol": "Pb-210"
+      },
+      {
+        "name": "Bismuth-214",
+        "symbol": "Bi-214"
+      },
+      {
+        "name": "Neptunium-237",
+        "symbol": "Np-237"
+      },
+      {
+        "name": "Californium-252",
+        "symbol": "Cf-252"
+      },
+      {
+        "name": "Promethium-147",
+        "symbol": "Pm-147"
+      },
+      {
+        "name": "Manganese-54",
+        "symbol": "Mn-54"
+      },
+      {
+        "name": "Yttrium-90",
+        "symbol": "Y-90"
+      },
+      {
+        "name": "Technetium-99",
+        "symbol": "Tc-99"
+      },
+      {
+        "name": "Cobalt-57",
+        "symbol": "Co-57"
+      },
+      {
+        "name": "Ruthenium-106",
+        "symbol": "Ru-106"
+      }
+    ]
+}
+  
