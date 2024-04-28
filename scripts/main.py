@@ -110,7 +110,6 @@ def list_chain(event):
     </section>
     '''
     
-
     try:
         finished: bool = False
         index: int = 1
@@ -127,8 +126,11 @@ def list_chain(event):
                 </div>
                 <hr>
             '''
+            nuc.branching_fractions()
+            nuc.decay_modes()
 
             if len(nuc.progeny()) > 0:
+                OUTPUT_DIV.innerHTML += f'↓ {nuc.decay_modes()[0]} ({nuc.branching_fractions()[0]*100}%)<hr>'
                 nuclide_name = nuc.progeny()[0]
                 index += 1
             else:
