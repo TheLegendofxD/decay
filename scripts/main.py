@@ -136,6 +136,7 @@ def list_chain(event):
                     case 1: # Manual
                         # Not implemented
                         progeny_index = 0
+                        OUTPUT_DIV.innerHTML += '<b>Manual mode not implemented!</b> <i>Using Most Probable instead</i>:'
                     case 2: # Simulate
                         if len(nuc.progeny()) > 1:
                             progeny_index = -1
