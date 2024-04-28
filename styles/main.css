@@ -1,16 +1,26 @@
+:root {
+    --background-color: #232323;
+    --text-color: #eee;
+    --link-color: #dd9900;
+    --input-border: #121212;
+    --input-bg: #434343;
+    --less-important-text: #999;
+    --loading-message: #ddd;
+}
+
 @font-face {
     font-family: 'Raleway';
     src: url('../assets/raleway.ttf');
 }
 
 body {
-    background-color: #232323;
-    color: #eee;
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-family: Raleway, sans-serif;
 }
 
 a {
-    color: #dd9900;
+    color: var(--link-color);
     text-decoration: none;
 }
 
@@ -67,11 +77,11 @@ input:focus {outline:none;}
     display: block;
     position: fixed;
     bottom: 3rem;
-    color: #999;
+    color: var(--less-important-text);
 }
 
 #loading-message {
-    color: #ddd;
+    color: var(--loading-message);
 }
 
 @keyframes fade-in {
@@ -100,11 +110,11 @@ nav {
 }
 
 .nuclide-input {
-    background-color: #434343;
-    color: white;
+    background-color: var(--input-bg);
+    color: var(--text-color);
     padding: .4rem;
     font-size: 1.1rem;
-    border: 1px solid #121212;
+    border: 1px solid var(--input-border);
     border-radius: .3rem;
     font-family: Raleway, sans-serif;
 }
@@ -114,10 +124,10 @@ nav {
     font-family: Raleway, sans-serif;
     font-size: 1.1rem;
     padding: .4rem;
-    border: 1px solid #121212;
+    border: 1px solid var(--input-border);
     border-radius: .3rem;
-    background-color: #434343;
-    color: white;
+    background-color: var(--input-bg);
+    color: var(--text-color);
     cursor: pointer;
 }
 
