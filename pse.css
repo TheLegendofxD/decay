@@ -95,6 +95,7 @@ section.pse-selector.active {
 .ele-57::after {
     cursor: default;
     color: white;
+    font-family: sans-serif;
     content: '*'; 
 } 
   
@@ -102,6 +103,7 @@ section.pse-selector.active {
 .ele-89::after {
     cursor: default;
     color: white;
+    font-family: sans-serif;
     content: '**'; 
 } 
   

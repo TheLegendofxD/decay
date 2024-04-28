@@ -1,7 +1,12 @@
+@font-face {
+    font-family: 'Raleway';
+    src: url('assets/raleway.ttf');
+}
+
 body {
     background-color: #232323;
     color: #eee;
-    font-family: sans-serif;
+    font-family: Raleway, sans-serif;
 }
 
 a {
@@ -101,10 +106,12 @@ nav {
     font-size: 1.1rem;
     border: 1px solid #121212;
     border-radius: .3rem;
+    font-family: Raleway, sans-serif;
 }
 
 .btn {
     display: inline-block;
+    font-family: Raleway, sans-serif;
     font-size: 1.1rem;
     padding: .4rem;
     border: 1px solid #121212;
