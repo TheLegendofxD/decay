@@ -163,7 +163,7 @@ def list_chain(event):
                         else:
                             progeny_index = 0
                     
-                OUTPUT_DIV.innerHTML += f'↓ {nuc.decay_modes()[progeny_index]} ({nuc.branching_fractions()[progeny_index]*100}%)<hr>'
+                OUTPUT_DIV.innerHTML += f'↓ {nuc.decay_modes()[progeny_index]} ({round(nuc.branching_fractions()[progeny_index]*100, ndigits=2)}%)<hr>'
                 nuclide_name = nuc.progeny()[progeny_index]
                 index += 1
             else:
