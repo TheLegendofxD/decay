@@ -104,19 +104,8 @@ def generate_progeny_tags(nuclide) -> str:
         result += f'<li class="progeny">{nuclide.decay_modes()[i]} ({round(nuclide.branching_fractions()[i]*100, ndigits=2)}%) → {progeny}</li>'
     return result + '</ul>'
 
-def list_chain(event):
-    nuclide_name = parse_nuclide_input(INPUT_FIELD.value)
-    OUTPUT_DIV.innerHTML = f'''
-    <section class="pre-results">
-        <p><i>Searching for {nuclide_name}</i></p>
-        <p>Plot Image of entire decay chain:</p>
-        <div>
-            <button data-nuclide="{nuclide_name}" data-type="download" id="plot-download-btn" class="btn" py-click="download_plot">Download</button>
-            <button data-nuclide="{nuclide_name}" data-type="open" id="plot-download-btn" class="btn" py-click="open_plot">Open in new Tab</button>
-        </div>
-    </section>
-    '''
-    
+def calculate_chain(start_nuclide: str):
+    nuclide_name = start_nuclide
     try:
         finished: bool = False
         index: int = 1
@@ -170,6 +159,21 @@ def list_chain(event):
                 finished = True
     except ValueError:
         OUTPUT_DIV.innerHTML = 'Invalid Nuclide Name'
+
+def list_chain(event):
+    nuclide_name = parse_nuclide_input(INPUT_FIELD.value)
+    OUTPUT_DIV.innerHTML = f'''
+    <section class="pre-results">
+        <p><i>Searching for {nuclide_name}</i></p>
+        <p>Plot Image of entire decay chain:</p>
+        <div>
+            <button data-nuclide="{nuclide_name}" data-type="download" id="plot-download-btn" class="btn" py-click="download_plot">Download</button>
+            <button data-nuclide="{nuclide_name}" data-type="open" id="plot-download-btn" class="btn" py-click="open_plot">Open in new Tab</button>
+        </div>
+    </section>
+    '''
+    calculate_chain(nuclide_name)
+    
 
 
 
