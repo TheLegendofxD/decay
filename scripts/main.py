@@ -129,7 +129,7 @@ def list_chain(event):
                     <b>Protons</b>: {nuc.Z}<br>
                     <b>Nucleon</b>: {nuc.A}<br>
                     <b>Halftime</b>: {nuc.half_life("readable")}<br>
-                    <b>Progeny</b>: {generate_progeny_tags(nuc)}
+                    <b>Progeny ({len(nuc.progeny())})</b>: {generate_progeny_tags(nuc)}
                 </div>
                 <hr>
             '''
