@@ -97,6 +97,13 @@ def open_plot(event):
     hidden_link.setAttribute('target', '_blank')
     hidden_link.click()
 
+def generate_progeny_tags(nuclide) -> str:
+    if len(nuclide.progeny()) <= 0: return 'None'
+    result: str = '<ul>'
+    for i, progeny in enumerate(nuclide.progeny()):
+        result += f'<li class="progeny">{nuclide.decay_modes()[i]} ({round(nuclide.branching_fractions()[i]*100, ndigits=2)}%) → {progeny}</li>'
+    return result + '</ul>'
+
 def list_chain(event):
     nuclide_name = parse_nuclide_input(INPUT_FIELD.value)
     OUTPUT_DIV.innerHTML = f'''
@@ -122,7 +129,7 @@ def list_chain(event):
                     <b>Protons</b>: {nuc.Z}<br>
                     <b>Nucleon</b>: {nuc.A}<br>
                     <b>Halftime</b>: {nuc.half_life("readable")}<br>
-                    <b>Progeny</b>: {nuc.progeny()}
+                    <b>Progeny</b>: {generate_progeny_tags(nuc)}
                 </div>
                 <hr>
             '''
