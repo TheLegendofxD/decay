@@ -146,6 +146,19 @@ input {
     min-width: 15rem;
 }
 
+.next_btn {
+    cursor: pointer;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: .3rem;
+}
+
+.next_btn:disabled {
+    background: none;
+    cursor: default;
+}
+
 section.pre-results {
     display: flex;
     flex-direction: column;
