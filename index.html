@@ -35,7 +35,9 @@
             <button class="btn" id="pse-btn">PT</button>
             <input type="text" placeholder="e.g. Th-233, Radium-225" id="nuclide-input" class="nuclide-input">
             <button py-click="change_mode" class="mode-btn btn" id="mode-btn">Mode: Most probable</button>
-            <button py-click="list_chain" class="submit-btn btn">Go!</button>
+            <button py-click="list_chain" class="submit-btn btn" id="submit-btn">Go!</button>
+            <input type="checkbox" id="just_append" class="hidden">
+            <input type="text" id="hidden-nuclide-input" class="hidden">
         </nav>
         <div id="output"></div>
         <!--

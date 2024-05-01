@@ -2,13 +2,15 @@ from pyscript import document
 import radioactivedecay as rd
 from radioactivedecay.utils import build_nuclide_string
 
-from js import Uint8Array, File, URL, document
+from js import Uint8Array, File, URL
 import io
-import random
+import random, uuid
 
 OUTPUT_DIV  = document.querySelector('#output')
 INPUT_FIELD = document.querySelector('#nuclide-input')
 MODE_BTN = document.querySelector('#mode-btn')
+JUSTAPPEND_CHECK = document.querySelector('#just_append')
+HIDDEN_INPUT = document.querySelector('#hidden-nuclide-input')
 
 MODES = ['Most probable', 'Manual', 'Simulate']
 ELEMENT_NAMES: dict = {"h":["hydrogen","wasserstoff"],"he":["helium"],"li":["lithium"],"be":["beryllium"],"b":["boron","bor"],"c":["carbon","kohlenstoff"],"n":["nitrogen","stickstoff"],"o":["oxygen","sauerstoff"],"f":["fluorine","fluor"],"ne":["neon"],"na":["sodium","natrium"],"mg":["magnesium"],"al":["aluminum","aluminium"],"si":["silicon","silicium"],"p":["phosphorus","phosphor"],"s":["sulfur","schwefel"],"cl":["chlorine","chlor"],"ar":["argon"],"k":["potassium","kalium"],"ca":["calcium"],"sc":["scandium"],"ti":["titanium","titan"],"v":["vanadium"],"cr":["chromium","chrom"],"mn":["manganese","mangan"],"fe":["iron","eisen"],"co":["cobalt"],"ni":["nickel"],"cu":["copper","kupfer"],"zn":["zinc","zink"],"ga":["gallium"],"ge":["germanium"],"as":["arsenic","arsen"],"se":["selenium","selen"],"br":["bromine","brom"],"kr":["krypton"],"rb":["rubidium"],"sr":["strontium"],"y":["yttrium"],"zr":["zirconium"],"nb":["niobium","niob"],"mo":["molybdenum","molybd\u00e4n"],"tc":["technetium"],"ru":["ruthenium"],"rh":["rhodium"],"pd":["palladium"],"ag":["silver","silber"],"cd":["cadmium"],"in":["indium"],"sn":["tin","zinn"],"sb":["antimony","antimon"],"te":["tellurium","tellur"],"i":["iodine","iod"],"xe":["xenon"],"cs":["cesium","caesium"],"ba":["barium"],"la":["lanthanum","lanthan"],"ce":["cerium","cer"],"pr":["praseodymium","praseodym"],"nd":["neodymium","neodym"],"pm":["promethium"],"sm":["samarium"],"eu":["europium"],"gd":["gadolinium"],"tb":["terbium"],"dy":["dysprosium"],"ho":["holmium"],"er":["erbium"],"tm":["thulium"],"yb":["ytterbium"],"lu":["lutetium"],"hf":["hafnium"],"ta":["tantalum","tantal"],"w":["tungsten","wolfram"],"re":["rhenium"],"os":["osmium"],"ir":["iridium","irudium"],"pt":["platinum","platin"],"au":["gold"],"hg":["mercury","quecksilber"],"tl":["thallium"],"pb":["lead","blei"],"bi":["bismuth","bismut"],"po":["polonium"],"at":["astatine","astat"],"rn":["radon"],"fr":["francium"],"ra":["radium"],"ac":["actinium"],"th":["thorium"],"pa":["protactinium"],"u":["uranium","uran"],"np":["neptunium"],"pu":["plutonium"],"am":["americium"],"cm":["curium"],"bk":["berkelium"],"cf":["californium"],"es":["einsteinium"],"fm":["fermium"],"md":["mendelevium"],"no":["nobelium"],"lr":["lawrencium"],"rf":["rutherfordium"],"db":["dubnium"],"sg":["seaborgium"],"bh":["bohrium"],"hs":["hassium"],"mt":["meitnerium"],"ds":["darmstadtium"],"rg":["roentgenium"],"cn":["copernicium"],"nh":["nihonium"],"fl":["flerovium"],"mc":["moscovium"],"lv":["livermorium"],"ts":["tennessine","tenness"],"og":["oganesson"]}
@@ -97,12 +99,19 @@ def open_plot(event):
     hidden_link.setAttribute('target', '_blank')
     hidden_link.click()
 
-def generate_progeny_tags(nuclide) -> str:
+def generate_progeny_tags(nuclide, generate_btns: bool = False) -> str:
     if len(nuclide.progeny()) <= 0: return 'None'
+
+    generate_btns = generate_btns if len(nuclide.progeny()) > 1 else False
+
     result: str = '<ul>'
     for i, progeny in enumerate(nuclide.progeny()):
-        result += f'<li class="progeny">{nuclide.decay_modes()[i]} ({round(nuclide.branching_fractions()[i]*100, ndigits=2)}%) → {progeny}</li>'
+        decay_mode = nuclide.decay_modes()[i]
+        fraction = round(nuclide.branching_fractions()[i]*100, ndigits=2)
+        button_html = f'><button class="next_btn" onclick="continue_chain(\'{progeny}\', \'{decay_mode}\', \'{fraction}\');"'
+        result += f'''<li class="progeny" { button_html if generate_btns else '' }>{decay_mode} ({fraction}%) → {progeny}{'</button>' if generate_btns else ''}</li>'''
     return result + '</ul>'
+
 
 def calculate_chain(start_nuclide: str):
     nuclide_name = start_nuclide
@@ -112,13 +121,14 @@ def calculate_chain(start_nuclide: str):
         while not finished:
             nuc = rd.Nuclide(nuclide_name)
             OUTPUT_DIV.innerHTML += generate_nuclide_card(build_nuclide_string(nuc.Z, nuc.A, nuc.state), nuc)
+            progeny_tags = generate_progeny_tags(nuc, current_mode == 1)
             OUTPUT_DIV.innerHTML += f'''
                 <div class="extra-info">
                     <b>Number in Chain</b>: {index}<br>
                     <b>Protons</b>: {nuc.Z}<br>
                     <b>Nucleon</b>: {nuc.A}<br>
                     <b>Halftime</b>: {nuc.half_life("readable")}<br>
-                    <b>Progeny ({len(nuc.progeny())})</b>: {generate_progeny_tags(nuc)}
+                    <b>Progeny ({len(nuc.progeny())})</b>: {progeny_tags}
                 </div>
                 <hr>
             '''
@@ -130,9 +140,10 @@ def calculate_chain(start_nuclide: str):
                     case 0: # Most Probable
                         progeny_index = 0
                     case 1: # Manual
-                        # Not implemented
+                        if len(nuc.progeny()) > 1:
+                            finished = True
+                            return
                         progeny_index = 0
-                        OUTPUT_DIV.innerHTML += '<b>Manual mode not implemented!</b> <i>Using Most Probable instead</i>:'
                     case 2: # Simulate
                         if len(nuc.progeny()) > 1:
                             progeny_index = -1
@@ -157,26 +168,31 @@ def calculate_chain(start_nuclide: str):
                 index += 1
             else:
                 finished = True
-    except ValueError:
-        OUTPUT_DIV.innerHTML = 'Invalid Nuclide Name'
+    except Exception as e:
+        OUTPUT_DIV.innerHTML = f'Error: {nuclide_name=}; {e}'
 
 def list_chain(event):
-    nuclide_name = parse_nuclide_input(INPUT_FIELD.value)
-    OUTPUT_DIV.innerHTML = f'''
-    <section class="pre-results">
-        <p><i>Searching for {nuclide_name}</i></p>
-        <p>Plot Image of entire decay chain:</p>
-        <div>
-            <button data-nuclide="{nuclide_name}" data-type="download" id="plot-download-btn" class="btn" py-click="download_plot">Download</button>
-            <button data-nuclide="{nuclide_name}" data-type="open" id="plot-download-btn" class="btn" py-click="open_plot">Open in new Tab</button>
-        </div>
-    </section>
-    '''
+    if JUSTAPPEND_CHECK.checked:
+        JUSTAPPEND_CHECK.checked = False
+        nuclide_name = parse_nuclide_input(HIDDEN_INPUT.value)
+    else:
+        nuclide_name = parse_nuclide_input(INPUT_FIELD.value)
+        OUTPUT_DIV.innerHTML = f'''
+        <section class="pre-results">
+            <p><i>Searching for {nuclide_name}</i></p>
+            <p>Plot Image of entire decay chain:</p>
+            <div>
+                <button data-nuclide="{nuclide_name}" data-type="download" id="plot-download-btn" class="btn" py-click="download_plot">Download</button>
+                <button data-nuclide="{nuclide_name}" data-type="open" id="plot-download-btn" class="btn" py-click="open_plot">Open in new Tab</button>
+            </div>
+        </section>
+        '''
     calculate_chain(nuclide_name)
     
 
 
-
+# Clear "justappend"-checkbox
+JUSTAPPEND_CHECK.checked = False
 
 # Removing Loading screen
 document.querySelector('.loading-screen').classList.remove('active')

@@ -190,3 +190,7 @@ section.pre-results > p {
     background-color: #000000;
     color: #fff;
 }
+
+.hidden {
+    display: none;
+}

@@ -61,3 +61,17 @@ function select_element(element) { nuclide_input.value = element+'-'; nuclide_in
 
 pse_selector.addEventListener('click', hide_pse);
 pse_btn.addEventListener('click', show_pse);
+
+
+
+
+function continue_chain(nuclide, decay_mode, fraction) {
+    document.querySelectorAll('button.next_btn').forEach(elem => {
+        elem.disabled = true;
+    });
+    console.log('Continuing with:', nuclide, decay_mode, fraction);
+    document.getElementById('output').innerHTML += '↓ ' + decay_mode + ' (' + fraction + '%)<hr>';
+    document.getElementById('hidden-nuclide-input').value = nuclide;
+    document.getElementById('just_append').checked = true;
+    document.getElementById('submit-btn').click();
+}
